@@ -1,0 +1,138 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <string.h>
+#include <time.h>
+
+int main (void){
+	setlocale(LC_ALL, "portuguese") ;
+	srand(time(NULL));
+	
+	// LOOP MENU
+	
+	int jogar_novamente = 1;
+	char decisao;
+	
+	// INTRODUÇÃO
+	
+	do {
+	
+	printf("#### Bem-Vindo ao Jogo da Forca :) ####");
+	printf("\n\n");
+	printf("Regras do jogo: Digite sempre em LETRA MINUSCULA\n");
+	
+	printf("\n\n");
+	
+	printf ("Quer jogar? Digite 1 para SIM e 2 para NÃO: \n");
+	scanf (" %c", &decisao);
+	
+	if (decisao == '1'){
+		printf("Vamboraaaa \n");
+		printf("\n\n");
+	}
+	 else if (decisao == '2'){
+		printf("Até a proxima :) \n");
+		printf("\n\n");
+		return 0;
+	} 
+	else {
+		printf("Opção invalida :( \n");
+	}
+	
+	} while (decisao != '1');
+	
+	// DECLARANOD AS PALAVRAS
+	
+	while (jogar_novamente == 1) {	
+	int i, acertou;
+	int acertos = 0, erros = 0;	
+	char letras_chutadas[26];
+	int total_chutes = 0;
+	char chute;
+	char *lista[] = {"banana", "abacate", "uva", "morango", "laranja", "melancia", "caju","amora", "pera", "pitanga"};
+	int total = 10;
+
+	
+	//INICIALIZA DE FORMA ALEATORIA
+	
+	int sorteada = rand() % total;
+	char palavra [100];
+	strcpy (palavra, lista[sorteada]);
+	int tamanho = strlen (palavra);
+	char progresso [100];
+	
+	printf("Fruta com %d letras:\n", tamanho);
+	
+    // Preenche o progresso com traços
+    for (i = 0; i < strlen(palavra); i++) {
+        progresso[i] = '_';
+    }
+    progresso[tamanho] = '\0';
+	
+	// Mostra os traços na tela
+	
+	for (i = 0; i < tamanho; i++){
+		printf (" %c", progresso[i]);
+	}
+	printf("\n\n");
+	
+	// LOOP PRINCIPAL DO JOGO
+	
+		while (acertos < tamanho && erros < 6) {
+    	acertou = 0;
+    	
+    // Mostrar progresso atual
+        
+    printf("\nPalavra: ");
+    for (i = 0; i < tamanho; i++) {
+    printf("%c ", progresso[i]);
+    }
+    
+    // PEDE O PRIMEIRO CHUTE
+	
+	printf("Digite uma letra \n");
+	scanf(" %c", &chute);
+	printf("\n\n");
+
+	// ACERTOU OU NÃO?
+	
+	for (i = 0; i < tamanho; i++){
+		 if (palavra[i] == chute && progresso[i] == '_') {
+		progresso[i] = chute;
+		letras_chutadas[total_chutes++] = chute;
+		acertos ++;
+		acertou = 1;
+		}
+	}
+	
+	printf("Letras já chutadas: ");
+for (i = 0; i < total_chutes; i++) {
+    printf("%c ", letras_chutadas[i]);
+}
+	
+	if (acertou) {
+    printf("ACERTOU '%c'\n", chute);
+} else {
+    printf("IIIH... ERROU '%c' :(\n", chute);
+    erros++;
+   		 }	
+	}
+	
+	// FIM DE JOGO
+	
+	if (acertos == tamanho) {
+    printf("\nParabéns! Você venceu! A palavra era: %s\n", palavra);
+	} else {
+    printf("\nVocê perdeu! A palavra era: %s\n", palavra); 	}
+ 
+ // JOGAR NOVAMENTE ???
+ 
+     printf("\nDeseja jogar novamente? (1 = Sim | 2 = Não): \n");
+        scanf(" %d", &jogar_novamente);
+        printf("\n\n");
+    }
+
+	printf("\nObrigado por jogar! Até a próxima. :)\n");
+
+    return 0;
+}
